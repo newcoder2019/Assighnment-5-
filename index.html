@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Random Facts</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+</head>
+
+<body>
+  <h1> Fast Food Trivia Game!</h1>
+  <h4>Time Remaining: <span class="time"></span></h4>
+  <div class="container">
+
+  </div>
+  <a class="waves-effect waves-light btn-small finishQuiz">Finish</a>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script>
+    let questions = [
+      {
+        id: 0,
+        question: 'What fast food restaurant is credited with introducing the first modern-day drive thrue?',
+        choices: ['Wendys', 'McDonalds', 'Burgerking', 'sonic'] ,
+        correct: 'Wendys in 1970',
+      },
+      {
+        id: 1,
+        question: 'Which of the following restaurants was founded first?',
+        choices: ['McDonalds', 'Burger King', 'In-n-Out Burger', 'WhatABurger'],
+        correct: 'In-N-Out Burger in 1948',
+      },
+      {
+        id: 2,
+        question: 'What did McDonalds restaurants first introduce in 1968?',
+        choices: ['Ronald McDonald', 'Egg McMuffin', 'Happy Meal', 'Big Mac'],
+        correct: 'Big Mac',
+      },
+      {
+        id: 3,
+        question: 'In 1940, the first McDonalds opened in _________.',
+        choices: ['Downey, CA', 'San Bernardino, CA', 'Cincinnati, OH', 'Eerie, IN', 'Atlantic City, NJ'],
+        correct: 'San Bernardino, CA',
+      },
+      {
+        id: 4,
+        question: 'What fast food restaurant was literally founded in a broom closet?',
+        choices: ['Papa Johns', 'Subway', 'McDonalds', 'Dairy Queen'],
+        correct: 'Papa Johns in 1984 When John Schnatter knocked out a broom closet in the back of his fathers tavern',
+      },
+      {
+        id: 5,
+        question: 'What fast food restaurant boasts that you can have it your way?',
+        choices: ['El Pollo Loco', 'Burger King', 'Subway', 'Del Taco'],
+        correct: 'Burger KIng',
+      },
+      {
+        id: 6,
+        question: 'Where was the first Long John Silvers restaurant opend?',
+        choices: ['San Dieago, Ca', 'Boston, Ma', 'Lexington, Kentucky', 'Providence, RI',],
+        correct: 'Lexington, Kentucky on August 18, 1969',
+      },
+      {
+        id: 7,
+        question: 'What fast food restaurant was founded by Janie and Jerry Murrell?',
+        choices: ['Panda Express', 'Five Guys Burgers and Fries', 'Burger Street', 'Wingstop',],
+        correct: 'Five Guys Burgers and Fries in 1986',
+      },
+      {
+        id: 8,
+        question: 'Which fast food restaurant is famous for their Curly fries and Jamocha Shakes?',
+        choices: ['Arbys', 'Nile Nandos', 'Wendys', 'Quiznos',],
+        correct: 'Arbys',
+      },
+      {
+        id: 9,
+        question: 'What taco shops menu features items such as The Democrat, The Republican, and the Independent?',
+        choices: ['Fuzzys Tacos', 'Velvet Tacos', 'Chronic Tacos', 'Torchys Tacos',],
+        correct: 'Torchys Tacos founded in 2006 in Austin, Texas',
+      }
+    ]
+    questions.forEach(question => {
+      $('.container').append(`
+        <div class="row">
+            <h5 class="question">${question.question}</h5>
+                <p>
+                    <label>
+                        <input class="with-gap" id="choice" data-choice="${question.choices[0]}" name="question-${question.id}" type="radio"  />
+                        <span>${question.choices[0]}</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" id="choice" data-choice="${question.choices[1]}" name="question-${question.id}" type="radio"  />
+                        <span>${question.choices[1]}</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" id="choice" data-choice="${question.choices[2]}" name="question-${question.id}" type="radio"  />
+                        <span>${question.choices[2]}</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" id="choice" data-choice="${question.choices[3]}" name="question-${question.id}" type="radio"  />
+                        <span>${question.choices[3]}</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" id="choice" data-choice="${question.choices[4]}" name="question-${question.id}" type="radio"  />
+                        <span>${question.choices[4]}</span>
+                    </label>
+                </p>
+            <p class="answer-${question.id}" style="visibility: hidden">${question.correct}</p>
+        </div>
+        `)
+    })
+    var qChoice0
+    var qChoice1
+    var qChoice2
+    var qChoice3
+    var qChoice4
+    $(document).on('click', '#choice', function () {
+      console.log($(this).attr('name'))
+      console.log($(this).attr('data-choice'))
+      let temp = $(this).attr('name').split('-')
+      let qId = temp[1]
+      window[`qChoice${qId}`] = $(this).attr('data-choice')
+    })
+    $('.finishQuiz').on('click', function () {
+      finishGame()
+    })
+    function finishGame() {
+      clearInterval(gameTimer)
+      count = 0
+      for (let i = 0; i < questions.length; i++) {
+        $(`.answer-${i}`).css('visibility', 'visible')
+        if (window[`qChoices${i}`] === questions[i].correct) {
+          count++
+        }
+      }
+      if (count === 10) {
+        alert('Perfect Score!')
+      } else {
+        alert('Try Again!')
+      }
+    }
+    function timeConversion(t) {
+      var minutes = Math.floor(t / 60)
+      var seconds = t - (minutes * 60)
+      if (seconds < 10) {
+        seconds = '0' + seconds
+      }
+      if (minutes === 0) {
+        minutes = '00'
+      } else if (minutes < 10) {
+        minutes = '0' + minutes
+      }
+      return minutes + ':' + seconds
+    }
+    let time = 120
+    $('.time').html('02:00')
+    let gameTimer = setInterval(function () {
+      time--
+      if (time > 0) {
+        $('.time').html(timeConversion(time))
+      } else {
+        $('.time').html('02:00')
+        finishGame()
+      }
+    }, 1000)
+  </script>
+
+</body>
+
+</html>
